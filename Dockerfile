@@ -28,3 +28,7 @@ WORKDIR pljava
 RUN mvn clean
 RUN mvn install
 RUN java -jar /pljava/pljava-packaging/target/pljava-pg9.4-amd64-Linux-gpp.jar
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
+EXPOSE 5432
+CMD ["postgres"]
