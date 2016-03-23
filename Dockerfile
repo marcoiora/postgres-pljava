@@ -25,6 +25,7 @@ RUN apt-get -y install oracle-java8-installer
 RUN git clone https://github.com/tada/pljava.git
 RUN export PGXS=/usr/lib/postgresql/9.4/lib/pgxs/src/makefiles/pgxs.mk
 WORKDIR pljava 
+RUN git checkout V1_5_0b3
 RUN mvn clean
 RUN mvn install
 RUN java -jar /pljava/pljava-packaging/target/pljava-pg9.4-amd64-Linux-gpp.jar
