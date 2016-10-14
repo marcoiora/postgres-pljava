@@ -1,13 +1,9 @@
 # vim:set ft=dockerfile:
 FROM postgres:9.4
-ENV TERM=xterm-256color DEBIAN_FRONTEND=noninteractive LC_ALL=C
+ENV TERM=xterm-256color
 
 RUN echo deb http://ftp.us.debian.org/debian jessie main > /etc/apt/sources.list && \
     echo deb http://ftp.us.debian.org/debian jessie-backports main >> /etc/apt/sources.list && \
-    apt-get update && \
-    apt-get -y upgrade && apt-get dist-upgrade && \
-    apt-get purge $(dpkg -l | awk '/^rc/ { print $2 }') && \
-    apt-get autoremove && \
     echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" > /etc/apt/sources.list.d/webupd8team-java.list && \
     echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" >> /etc/apt/sources.list.d/webupd8team-java.list && \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886 && \
@@ -32,7 +28,6 @@ RUN echo deb http://ftp.us.debian.org/debian jessie main > /etc/apt/sources.list
     apt-get -y clean autoclean autoremove && \
     rm -rf ~/.m2 && rm -rf pljava/ /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ENV DEBIAN_FRONTEND teletype
 ADD /docker-entrypoint-initdb.d /docker-entrypoint-initdb.d
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
